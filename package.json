@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://thedandan.github.io/Charcoal",
+  "homepage": "https://thedandan.github.io/Charcoal/",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
