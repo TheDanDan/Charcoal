@@ -10,7 +10,12 @@ const WelcomeText = () => (
                 maxIterations={30}
             />
         </h1>
-        <p>Drop a file to start</p>
+        <DecryptedText
+            text="Drop a file to start"
+            animateOn="view"
+            speed={200}
+            maxIterations={30}
+        />
     </div>
 );
 
