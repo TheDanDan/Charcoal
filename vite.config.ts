@@ -3,7 +3,7 @@ import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import path from "path"
 
-const repoName = '/Haishoku/';
+const repoName = '/Charcoal/';
 
 // https://vite.dev/config/
 export default defineConfig({
