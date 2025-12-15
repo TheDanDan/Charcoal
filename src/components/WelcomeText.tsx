@@ -6,8 +6,7 @@ const WelcomeText = () => (
             <DecryptedText
                 text="Obscure your Images"
                 animateOn="view"
-                revealDirection="center"
-                speed={100}
+                speed={200}
                 maxIterations={30}
             />
         </h1>
