@@ -8,7 +8,7 @@ function App() {
 
   return (
     <>
-    <Provider>
+    <Provider forcedTheme="dark">
       <div className='w-screen h-screen fixed inset-0 z-0 flex justify-center items-center'>
         <FaultyTerminal
           scale={4}
