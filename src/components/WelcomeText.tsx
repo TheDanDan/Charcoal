@@ -6,16 +6,11 @@ const WelcomeText = () => (
             <DecryptedText
                 text="Obscure your Images"
                 animateOn="view"
-                speed={100}
-                maxIterations={30}
+                speed={50}
+                maxIterations={20}
+                sequential={true}
             />
         </h1>
-        {/* <DecryptedText
-            text="Drop a file to start"
-            animateOn="view"
-            speed={100}
-            maxIterations={30}
-        /> */}
     </div>
 );
 

@@ -1,36 +1,21 @@
 import './App.css'
-import FaultyTerminal from './components/FaultyTerminal'
 import WelcomeText from './components/WelcomeText'
 import { Provider } from "@/components/ui/provider"
 import FileDropZone from './components/FileDropZone'
+import Background from './components/Background'
+import { useCallback, useState } from 'react'
 
 function App() {
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
+
+  const handleFileChange = useCallback((imageSrc: string | null) => {
+    setImageSrc(imageSrc);
+  }, []);
 
   return (
     <>
     <Provider forcedTheme="dark">
-      <div className='w-screen h-screen fixed inset-0 z-0 flex justify-center items-center'>
-        <FaultyTerminal
-          scale={4}
-          gridMul={[2, 1]}
-          digitSize={3}
-          timeScale={0.5}
-          pause={false}
-          scanlineIntensity={0.2}
-          glitchAmount={1}
-          flickerAmount={1}
-          noiseAmp={0.8}
-          chromaticAberration={0}
-          dither={0.2}
-          curvature={0.1}
-          tint="#a4a4a4"
-          mouseReact={true}
-          mouseStrength={0.5}
-          pageLoadAnimation={false}
-          brightness={0.75}
-        />
-      </div>
-
+      <Background />
       <div
         className='w-screen h-screen fixed inset-0 z-10 flex justify-center items-center' 
         style={{ pointerEvents: 'none' }} 
@@ -40,7 +25,7 @@ function App() {
             <WelcomeText />
           </div>
           <div style={{ pointerEvents: 'auto' }} className='w-full flex flex-col justify-center items-center'>
-            <FileDropZone />
+            <FileDropZone handleFileChange={handleFileChange} />
           </div>
         </div>
       </div>
