@@ -1,12 +1,19 @@
-import { Box, FileUpload, Icon } from "@chakra-ui/react"
-import { LuUpload } from "react-icons/lu"
-import DecryptedText from "./DecryptedText"
+import { Box, FileUpload, Icon } from '@chakra-ui/react';
+import { LuUpload } from 'react-icons/lu';
+import DecryptedText from './DecryptedText';
 
-const FileDropZone = ({ handleFileChange }: { handleFileChange: (imageSrc: string | null) => void }) => {
-
-
+const FileDropZone = ({
+  handleFileChange,
+}: {
+  handleFileChange: (imageSrc: string | null) => void;
+}) => {
   return (
-    <FileUpload.Root maxW="xl" alignItems="stretch" maxFiles={1} accept={{'image/png': ['.png'],'image/jpeg': ['.jpg', '.jpeg']}}>
+    <FileUpload.Root
+      maxW="xl"
+      alignItems="stretch"
+      maxFiles={1}
+      accept={{ 'image/png': ['.png'], 'image/jpeg': ['.jpg', '.jpeg'] }}
+    >
       <FileUpload.HiddenInput />
       <FileUpload.Dropzone>
         <FileUpload.DropzoneContent>
@@ -17,7 +24,13 @@ const FileDropZone = ({ handleFileChange }: { handleFileChange: (imageSrc: strin
             </Icon>
           </Box>
           <Box>
-            <div style={{color: '#a4a4a4', fontFamily: 'monospace', fontSize: '1.5rem'}}> 
+            <div
+              style={{
+                color: '#a4a4a4',
+                fontFamily: 'monospace',
+                fontSize: '1.5rem',
+              }}
+            >
               <DecryptedText
                 text="Drop a file to start"
                 animateOn="view"
@@ -34,7 +47,7 @@ const FileDropZone = ({ handleFileChange }: { handleFileChange: (imageSrc: strin
       </FileUpload.Dropzone>
       {/* <FileUpload.List /> */}
     </FileUpload.Root>
-  )
-}
+  );
+};
 
-export default FileDropZone
+export default FileDropZone;
