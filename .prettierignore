@@ -1,0 +1,9 @@
+# Ignore build output
+/build
+/dist
+
+# Ignore logs
+/*.log
+
+# Ignore vendor directories
+/vendor
