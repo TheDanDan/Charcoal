@@ -26,26 +26,71 @@ export function convertToGrayscale(
     }
 
     yIndex += BATCH_SIZE;
+    ctx.putImageData(imageData, 0, 0);
     if (yIndex < height) {
       setTimeout(() => processBatch(yIndex), 0);
-    } else {
-      ctx.putImageData(imageData, 0, 0);
     }
   }
   processBatch(0);
 }
 
-function getLinearToRandomSRGB(): Map<number, number[]> {
-  const SRGBValues = new Map<number, number[]>();
+function getLinearToRandomSRGB(): number[][][] {
+  const SRGBValues: number[][][] = Array.from({ length: 256 }, () => []);
 
-  for (let i = 0; i <= 255; i++) {
-    for (let j = 0; j <= 12; j++) {
-      const linearValue = i / 255 + j / 1000;
-      
+  for (let R_srgb = 0; R_srgb <= 255; R_srgb++) {
+    for (let G_srgb = 0; G_srgb <= 255; G_srgb++) {
+      for (let B_srgb = 0; B_srgb <= 255; B_srgb++) {
+        const r = R_srgb / 255;
+        const g = G_srgb / 255;
+        const b = B_srgb / 255;
+
+        const luminance = srgbToLuminanceGrayscale(r, g, b);
+        const index = Math.round(luminance * 255);
+
+        SRGBValues[index].push([R_srgb, G_srgb, B_srgb]);
+      }
     }
   }
 
   return SRGBValues;
+}
+
+export function convertToRandomizedGrayscale(
+  ctx: CanvasRenderingContext2D,
+  width: number,
+  height: number
+): void {
+  const imageData = ctx.getImageData(0, 0, width, height);
+  const data = imageData.data;
+
+  const SRGBValues = getLinearToRandomSRGB();
+
+  function processBatch(yIndex: number = 0): void {
+    const endIndex = Math.min(yIndex + BATCH_SIZE, height);
+
+    for (let y = yIndex; y < endIndex; y++) {
+      for (let x = 0; x < width; x++) {
+        const i = (y * width + x) * 4;
+        const index = data[i];
+
+        const candidates = SRGBValues[index];
+        if (candidates.length > 0) {
+          const randomIdx = getRandomValue(0, candidates.length - 1);
+          const [R_srgb, G_srgb, B_srgb] = candidates[randomIdx];
+          data[i] = R_srgb;
+          data[i + 1] = G_srgb;
+          data[i + 2] = B_srgb;
+        }
+      }
+    }
+
+    yIndex += BATCH_SIZE;
+    ctx.putImageData(imageData, 0, 0);
+    if (yIndex < height) {
+      setTimeout(() => processBatch(yIndex), 0);
+    }
+  }
+  processBatch(0);
 }
 
 const getRandomValue = (min: number, max: number): number => {
