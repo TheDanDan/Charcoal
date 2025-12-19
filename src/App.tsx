@@ -4,12 +4,13 @@ import { Provider } from '@/components/ui/provider';
 import FileDropZone from './components/FileDropZone';
 import Background from './components/Background';
 import { useCallback, useState } from 'react';
+import ImageView from './components/ImageView';
 
 function App() {
-  const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
-  const handleFileChange = useCallback((imageSrc: string | null) => {
-    setImageSrc(imageSrc);
+  const handleFileChange = useCallback((imageFile: File | null) => {
+    setImageFile(imageFile);
   }, []);
 
   return (
@@ -34,7 +35,10 @@ function App() {
               style={{ pointerEvents: 'auto' }}
               className="w-full flex flex-col justify-center items-center"
             >
-              <FileDropZone handleFileChange={handleFileChange} />
+              {!imageFile && (
+                <FileDropZone handleFileChange={handleFileChange} />
+              )}
+              {imageFile && <ImageView image={imageFile} />}
             </div>
           </div>
         </div>
