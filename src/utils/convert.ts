@@ -35,6 +35,28 @@ export function convertToGrayscale(
   processBatch(0);
 }
 
+function getLinearToRandomSRGB(): Map<number, number[]> {
+  const SRGBValues = new Map<number, number[]>();
+
+  for (let i = 0; i <= 255; i++) {
+    for (let j = 0; j <= 12; j++) {
+      const linearValue = i / 255 + j / 1000;
+      
+    }
+  }
+
+  return SRGBValues;
+}
+
+const getRandomValue = (min: number, max: number): number => {
+  const range = max - min + 1;
+
+  const uint32 = new Uint32Array(1);
+  window.crypto.getRandomValues(uint32);
+
+  return min + (uint32[0] % range);
+};
+
 function srgbToLinear(C_srgb: number): number {
   if (C_srgb <= 0.04045) {
     return C_srgb / 12.92;
@@ -43,7 +65,7 @@ function srgbToLinear(C_srgb: number): number {
   }
 }
 
-function linearToSrgb(Y_linear: number): number {
+function linearToSRGB(Y_linear: number): number {
   if (Y_linear <= 0.0031308) {
     return Y_linear * 12.92;
   } else {
@@ -51,7 +73,7 @@ function linearToSrgb(Y_linear: number): number {
   }
 }
 
-export function srgbToLuminanceGrayscale(
+function srgbToLuminanceGrayscale(
   R_srgb: number,
   G_srgb: number,
   B_srgb: number
@@ -60,6 +82,6 @@ export function srgbToLuminanceGrayscale(
   const G_linear = srgbToLinear(G_srgb);
   const B_linear = srgbToLinear(B_srgb);
   const Y_linear = 0.2126 * R_linear + 0.7152 * G_linear + 0.0722 * B_linear;
-  const Y_srgb = linearToSrgb(Y_linear);
+  const Y_srgb = linearToSRGB(Y_linear);
   return Math.max(0.0, Math.min(1.0, Y_srgb));
 }

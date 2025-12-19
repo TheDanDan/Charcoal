@@ -1,18 +1,24 @@
 import { Box, FileUpload, Icon } from '@chakra-ui/react';
 import { LuUpload } from 'react-icons/lu';
 import DecryptedText from './DecryptedText';
+import type { FileAcceptDetails } from 'node_modules/@chakra-ui/react/dist/types/components/file-upload/namespace';
 
 const FileDropZone = ({
   handleFileChange,
 }: {
-  handleFileChange: (imageSrc: string | null) => void;
+  handleFileChange: (imageFile: File | null) => void;
 }) => {
+  const handleFileAccept = (details: FileAcceptDetails) => {
+    const file = details.files[0] || null;
+    handleFileChange(file);
+  };
+
   return (
     <FileUpload.Root
       maxW="xl"
       alignItems="stretch"
       maxFiles={1}
-      accept={{ 'image/png': ['.png'], 'image/jpeg': ['.jpg', '.jpeg'] }}
+      onFileAccept={handleFileAccept}
     >
       <FileUpload.HiddenInput />
       <FileUpload.Dropzone>
